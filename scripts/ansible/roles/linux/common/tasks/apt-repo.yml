@@ -1,0 +1,33 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+- name: Include distribution vars
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.yml"
+
+- name: Install apt-transport-https APT package
+  ansible.builtin.apt:
+    name: apt-transport-https
+    state: latest
+  retries: 100
+  register: add_transport
+  until: add_transport is success
+
+- name: Add APT repository key
+  ansible.builtin.apt_key:
+    url: "{{ apt_key_url }}"
+    state: present
+  retries: 10
+  register: add_key
+  until: add_key is success
+  when: apt_key_url is defined
+
+- name: Add APT repository
+  ansible.builtin.apt_repository:
+    repo: "{{ apt_repository }}"
+    state: present
+    update_cache: yes
+  retries: 10
+  register: add_repo
+  until: add_repo is success

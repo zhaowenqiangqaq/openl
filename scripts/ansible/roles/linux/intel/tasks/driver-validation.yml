@@ -1,0 +1,16 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+- name: Include distribution vars
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}/main.yml"
+
+- name: Include distribution release specific vars
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.yml"
+
+- name: Check default driver files
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  loop: "{{ intel_dcap_driver_files }}"

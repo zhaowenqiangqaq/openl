@@ -1,0 +1,39 @@
+// Copyright (c) Open Enclave SDK contributors.
+// Licensed under the MIT License.
+
+enclave {
+    from "openenclave/edl/logging.edl" import *;
+    from "openenclave/edl/fcntl.edl" import *;
+    from "openenclave/edl/socket.edl" import *;
+#ifdef OE_SGX
+    from "openenclave/edl/sgx/platform.edl" import *;
+    from "openenclave/edl/sgx/entropy.edl" import *;
+#else
+    from "openenclave/edl/optee/platform.edl" import *;
+#endif
+
+    trusted {
+        public int enc_test(
+            int argc,
+            [user_check] char** argv,
+            [user_check] char** env);
+
+        public void enc_enclave_thread (
+            uint64_t enc_key);
+    };
+
+    untrusted {
+        void host_exit(
+            int arg);
+
+        void host_create_thread(
+            uint64_t enc_key,
+            [user_check] oe_enclave_t* enc);
+
+        int host_join_thread(
+            uint64_t enc_key);
+
+        int host_detach_thread(
+            uint64_t enc_key);
+    };
+};

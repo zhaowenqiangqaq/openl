@@ -1,0 +1,48 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+- name: Gather Ansible facts
+  ansible.builtin.gather_facts:
+
+- name: Include distribution release specific vars
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}.yml"
+
+- name: Install Docker prerequisite packages
+  ansible.builtin.apt:
+    name: "{{ ci_apt_packages }}"
+    state: latest
+    update_cache: yes
+    install_recommends: no
+
+# Workaround for Ubuntu 18.04 Docker container tests
+# https://github.com/intel/linux-sgx/blob/a85fbe9a55767681b0f799a66555b123312fb72c/linux/installer/common/psw/install.sh#L66-L99
+- name: Create /etc/init directory
+  ansible.builtin.file:
+    path: /etc/init
+    state: directory
+
+- name: Import OpenEnclave Setup Tasks
+  ansible.builtin.import_role:
+    name: linux/openenclave
+    tasks_from: environment-setup.yml
+
+- name: Import OpenEnclave Setup Cross ARM tasks
+  ansible.builtin.import_role:
+    name: linux/openenclave
+    tasks_from: environment-setup-cross-arm.yml
+
+- name: Import Intel SGX Packages tasks
+  ansible.builtin.import_role:
+    name: linux/intel
+    tasks_from: sgx-packages.yml
+
+- name: Import Az DCAP Client Tasks
+  ansible.builtin.import_role:
+    name: linux/az-dcap-client
+    tasks_from: stable-install.yml
+
+- name: Install Azure CLI
+  ansible.builtin.import_role:
+    name: linux/azure-cli

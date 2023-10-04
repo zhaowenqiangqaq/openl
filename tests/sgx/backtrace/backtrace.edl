@@ -1,0 +1,17 @@
+// Copyright (c) Open Enclave SDK contributors.
+// Licensed under the MIT License.
+
+enclave {
+    from "openenclave/edl/logging.edl" import *;
+    from "openenclave/edl/fcntl.edl" import *;
+    from "openenclave/edl/sgx/attestation.edl" import *;
+    from "openenclave/edl/sgx/cpu.edl" import *;
+    from "openenclave/edl/sgx/thread.edl" import *;
+    from "openenclave/edl/sgx/debug.edl" import *;
+
+    trusted {
+        public void enc_test();
+        public void enc_test_segfault();
+        public void enc_test_abort_after_segfault();
+    };
+};

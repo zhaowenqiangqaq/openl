@@ -1,0 +1,37 @@
+[submodule "3rdparty/optee/optee_os"]
+	path = 3rdparty/optee/optee_os
+	url = https://github.com/ms-iot/optee_os
+	branch = ms-iot-openenclave
+[submodule "3rdparty/optee/optee_client"]
+	path = 3rdparty/optee/optee_client
+	url = https://github.com/ms-iot/optee_client
+	branch = ms-iot-openenclave
+[submodule "3rdparty/snmalloc"]
+	path = 3rdparty/snmalloc/snmalloc
+	url = https://github.com/Microsoft/snmalloc.git
+[submodule "tools/oeedger8r-cpp"]
+	path = tools/oeedger8r-cpp
+	url = https://github.com/openenclave/oeedger8r-cpp
+[submodule "3rdparty/openssl/openssl"]
+	path = 3rdparty/openssl/openssl
+	url = https://github.com/openssl/openssl
+[submodule "3rdparty/mbedtls/mbedtls"]
+	path = 3rdparty/mbedtls/mbedtls
+	url = https://github.com/openenclave/openenclave-mbedtls.git
+	branch = openenclave-mbedtls-2.28.1
+[submodule "3rdparty/openssl/intel-sgx-ssl"]
+	path = 3rdparty/openssl/intel-sgx-ssl
+	url = https://github.com/intel/intel-sgx-ssl
+[submodule "3rdparty/musl/musl"]
+	path = 3rdparty/musl/musl
+	url = https://github.com/openenclave/openenclave-musl.git
+	branch = openenclave-musl-1.2.2
+[submodule "3rdparty/musl/libc-test"]
+	path = 3rdparty/musl/libc-test
+	url = https://github.com/openenclave/openenclave-musl-libc-tests
+[submodule "3rdparty/symcrypt_engine/SymCrypt-OpenSSL"]
+	path = 3rdparty/symcrypt_engine/SymCrypt-OpenSSL
+	url = https://github.com/microsoft/SymCrypt-OpenSSL
+[submodule "3rdparty/openssl/openssl_3"]
+	path = 3rdparty/openssl/openssl_3
+	url = https://github.com/openssl/openssl

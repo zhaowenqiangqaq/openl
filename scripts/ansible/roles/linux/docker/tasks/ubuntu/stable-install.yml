@@ -1,0 +1,55 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+- name: Docker | Add the APT repository key
+  ansible.builtin.apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+  retries: 10
+  delay: 10
+  register: result
+  until: result is success
+
+- name: Docker | Add the APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    update_cache: yes
+  retries: 10
+  delay: 10
+  register: result
+  until: result is success
+
+- name: Docker | Install Docker packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items: "{{ docker_packages }}"
+  retries: 10
+  delay: 10
+  register: result
+  until: result is success
+
+- name: Docker | Install Docker for Python
+  when: docker_ansible is defined and docker_ansible | bool
+  block:
+
+    - name: Docker | Install pip3
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+      when:
+        - "'python3-pip' not in ansible_facts.packages"
+        - "'python3' in ansible_facts.packages"
+      register:
+        pip3_installed
+
+    - name: Docker | Install Docker Python 3 library
+      ansible.builtin.pip:
+        name: docker
+        executable: pip3
+      when: >
+        "'python3-pip' in ansible_facts.packages" or
+        pip3_installed.changed

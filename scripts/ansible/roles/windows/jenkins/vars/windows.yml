@@ -1,0 +1,13 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+tmp_dir: "C:\\Windows\\Temp"
+shellcheck_dest: "C:\\Program Files\\shellcheck"
+jenkins_agent_root_dir: "C:/Jenkins"
+servicewrapper_url: "https://github.com/cloudbase/OpenStackService/releases/download/v0.1/service-wrapper-sdk10-x64.zip"
+jdk_url: "https://jenkinsprivatestorage.blob.core.windows.net/oraclejdk/jdk-11.0.16.1_windows-x64_bin.exe"
+
+validation_binaries:
+  - "C:\\Program Files\\Java\\jdk-11.0.16.1\\bin\\java.exe"
+  - "C:\\Windows\\System32\\docker.exe"

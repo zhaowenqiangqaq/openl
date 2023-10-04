@@ -1,0 +1,22 @@
+# Copyright (c) Open Enclave SDK contributors.
+# Licensed under the MIT License.
+
+---
+- name: Include distribution vars
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}/main.yml"
+
+- name: Check for existing required binaries
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  with_items: "{{ validation_binaries }}"
+  register: binary
+  failed_when: not binary.stat.executable
+
+- name: Check Docker and Dockerd
+  community.general.docker_host_info:
+  register: docker_result
+
+- name: Print Docker host info
+  ansible.builtin.debug:
+    var: docker_result.host_info
